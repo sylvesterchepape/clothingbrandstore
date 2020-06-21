@@ -1,0 +1,47 @@
+<%- include("./partials/header") %>
+
+<a class="btn btn-outline-secondary below-nav" href="/brands/new">
+add new product
+</a>
+
+<div class="container below-nav">
+    <h4>Recently added items</h4>
+    <hr class=" shadow mx-3">
+    <div class="row text-center " style="display:flex;flex-wrap:wrap">
+      <%products.forEach(function(product){%>
+      <div class="col-md-3 col-sm-6 mx-4 mb-2">
+        
+          <div class="card" style="width: 18rem;">
+            <img src="<%=product.image%>" class="card-img-top">
+
+            <div class="card-body">
+              <h5 class="card-title"> <%=product.brand%></h5>
+              <h4><%=product.product%></h4>
+              <h3>R<%=product.price%> each</h3>
+              <p class="card-text"><%=product.decription%></p>
+          </div>
+          <form action="/brands/<%product._id%>" method="GET">
+          <p>
+            <button  class="stretched-link">add to cart</button>
+          </p>
+        </form>
+        </div>
+        
+        
+    </div>
+      
+        
+    
+    <%})%>
+      </div>
+    
+
+
+
+
+   
+
+
+
+
+<%- include("./partials/footer") %>
