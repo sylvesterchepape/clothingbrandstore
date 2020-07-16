@@ -20,11 +20,12 @@ add new product
               <h3>R<%=product.price%> each</h3>
               <p class="card-text"><%=product.decription%></p>
           </div>
-          <form action="/brands/<%product._id%>" method="GET">
+          <form action="/brands/<%= product._id%>" method="GET">
           <p>
             <button  class="stretched-link">add to cart</button>
           </p>
         </form>
+      
         </div>
         
         

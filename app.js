@@ -1,8 +1,7 @@
 var express= require("express"),
     app  =express(),
-    mongoose=require("mongoose"),
-  
-    bodyParser=require('body-parser');
+    bodyParser=require('body-parser'),
+    mongoose=require("mongoose");
 
 const localhost="127.0.0.1";
 const port=8080;
@@ -11,6 +10,8 @@ mongoose.connect(process.env.DATABASEURL||"mongodb://localhost:port/clothing", {
 
 
 app.use(express.static(__dirname + "/public"));
+
+app.use(express.static(__dirname + "/js"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine","ejs");
 
@@ -23,7 +24,6 @@ var ProductSchema = new mongoose.Schema({
     size:String,
     description: String,
     qty:Number
-    
  })  ; 
  var Product = mongoose.model("Product", ProductSchema);
 
@@ -54,6 +54,7 @@ app.get("/brands",function(req,res){
             
 });
 
+//create new product
 app.post("/brands", function(req, res){
     // get data from form and add to campgrounds array
     var name=req.body.name
@@ -84,7 +85,9 @@ app.get("/brands/new",function(req,res){
 //show product info routes
 app.get("/brands/:id",function(req,res){
     //find the product id
+   
     Product.findById(req.params.id,function(err,foundproduct){
+        console.log("this is the id"+ req.params.id);
         if(err){
             console.log(err);
         }else{
@@ -92,9 +95,7 @@ app.get("/brands/:id",function(req,res){
             res.render("show",{products:foundproduct});
         }
     });
-})
-
-
+});
 
 
 
