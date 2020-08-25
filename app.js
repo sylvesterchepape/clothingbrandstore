@@ -1,6 +1,13 @@
 var express= require("express"),
     app  =express(),
     bodyParser=require('body-parser'),
+    passport = require("passport"),
+    localStrategy = require("passport-local"),
+    bodyParser = require("body-parser"),
+
+    passportLocalMongoose = require("passport-local-mongoose")
+    User      = require("./models/user"),
+    Product     = require("./models/clothes"),
     mongoose=require("mongoose");
 
 const localhost="127.0.0.1";
@@ -8,6 +15,11 @@ const port=8080;
 //connecting to mongodb
 mongoose.connect(process.env.DATABASEURL||"mongodb://localhost:port/clothing", { useNewUrlParser: true , useUnifiedTopology: true, useFindAndModify: false});
 
+app.use(require("express-session")({
+    secret:"sylvester gotta code everyday bitch",
+      resave:false,
+      saveUninitialized:false
+  }))
 
 app.use(express.static(__dirname + "/public"));
 
@@ -15,17 +27,14 @@ app.use(express.static(__dirname + "/js"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine","ejs");
 
+//we tell app.js to use passport packages
+app.use(passport.initialize());
+app.use(passport.session());
 
-var ProductSchema = new mongoose.Schema({
-    name: String,
-    brand:String,
-    price:String,
-    image: String,
-    size:String,
-    description: String,
-    qty:Number
- })  ; 
- var Product = mongoose.model("Product", ProductSchema);
+//responsiple in reading the session and taking data from the session
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 //array of clothes
 /*var products=[{brand:"nike",size:"S",product:"t-shirt",image:"https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80",price:"123",decription:"image1"},
@@ -96,6 +105,53 @@ app.get("/brands/:id",function(req,res){
         }
     });
 });
+
+
+// Auth Routes
+
+//show sign up form
+app.get("/register", function(req, res){
+    res.render("register"); 
+ });
+ //handling user sign up
+ app.post("/register", function(req, res){
+     console.log(req.body.username)
+     User.register(new User({username: req.body.username}), req.body.password, function(err, user){
+         if(err){
+             console.log(err);
+             return res.render('register');
+         }
+         passport.authenticate("local")(req, res, function(){
+            res.redirect("/login");
+         });
+     });
+ });
+
+// LOGIN ROUTES
+//render login form
+app.get("/login", function(req, res){
+    res.render("login"); 
+ });
+ //login logic
+ //middleware
+ app.post("/login", passport.authenticate("local", {
+     successRedirect: "/secret",
+     failureRedirect: "/login"
+ }) ,function(req, res){
+ });
+ 
+ app.get("/logout", function(req, res){
+     req.logout();
+     res.redirect("/");
+ });
+ 
+ 
+ function isLoggedIn(req, res, next){
+     if(req.isAuthenticated()){
+         return next();
+     }
+     res.redirect("/login");
+ }
 
 
 
