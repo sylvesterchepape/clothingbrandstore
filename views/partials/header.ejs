@@ -13,38 +13,36 @@
 
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg fixed-top bg-dark navbar-light toolbar nav-bg">
+  <nav class="navbar navbar-expand-lg fixed-top bg-nav navbar-light toolbar">
     <div class="container">
-    <a class="navbar-brand text-light" href="/">clothing</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    <a class="navbar-brand text-light brand-nav" href="/">clothing</a>
+    <button class="navbar-toggler text-light bg-border" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      Manu <span class="navbar-toggler-icon my-2"></span>
     </button>
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link active nav-color text-light" href="#">women <span class="sr-only">(current)</span></a>
+          <a class="nav-link text-light nav-color text-link" href="/brands/new">sell with us </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" href="#">men's</a>
+          <a class="nav-link text-light text-link " href="#">help</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            labels
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item text-dark" href="#">adidas</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item text-dark" href="#">nike</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item text-dark" href="#">other brands</a>
-          </div>
-        </li>
+
+        
+       
         <li class="nav-item">
-          <a class="nav-link nav-color text-light" href="#" tabindex="-1" aria-disabled="true">blog</a>
+          <a class="nav-link nav-color text-light text-link" href="#" >latest trends</a>
         </li>
+        
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        
+        <!-- <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="search product" aria-label="Search">
+          <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form> -->
+
         </li>
         <li class="nav-item">
           <a class="nav-link mx-2 text-light" href="/"><i class="fa fa-heart-o" aria-hidden="true"></i>
@@ -52,17 +50,32 @@
         </li>
         <div class="dropdown-divider"></div>
           <li class="nav-item">
-            <a class="nav-link mx-2 text-light" href="/"><i class="fa fa-shopping-cart" aria-hidden="true"> <span class="badge badge-light mb-1">0</span></i>
+            <a class="nav-link mx-2 sm-text-dark text-light " href="/"><i class="fa fa-shopping-cart" aria-hidden="true"> <span class="badge badge-light mb-1">0</span></i>
             </a>
   
         </li>
-      </ul>
-      <div class="dropdown-divider"></div>
+        <div class="dropdown-divider"></div>
       <form class="form-inline">
+        <% if(!currentUser){ %>
         <a class="btn btn-outline-secondary" href="/login">sign/signup</a>
-        
       </form>
+      <% } else { %>
+        <div class="dropdown-divider"></div>
+        <li class="nav-item">
+          <a class="nav-link mx-2 sm-text-dark text-light " href="#">signed as <%= currentUser.username%>
+          </a>
+      </li>
+        <div class="dropdown-divider"></div>
+        <li class="nav-item">
+          <a class="nav-link mx-2 sm-text-dark text-light " href="/logout">logout
+          </a>
+      </li>
+      <% } %>
+      </ul>
+      
+        
     </div>
+   
   </div>
   </nav>
   <hr class="shadow">

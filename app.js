@@ -8,6 +8,7 @@ var express= require("express"),
     passportLocalMongoose = require("passport-local-mongoose")
     User      = require("./models/user"),
     Product     = require("./models/clothes"),
+    expessValidator=require('express-validator'),
     mongoose=require("mongoose");
 
 const localhost="127.0.0.1";
@@ -15,23 +16,29 @@ const port=8080;
 //connecting to mongodb
 mongoose.connect(process.env.DATABASEURL||"mongodb://localhost:port/clothing", { useNewUrlParser: true , useUnifiedTopology: true, useFindAndModify: false});
 
+
+
+app.use(express.static(__dirname + "/public"));
+
+app.use(express.static(__dirname + "/js"));
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.set("view engine","ejs");
+
+//passport config
+//we tell app.js to use passport packages
+
 app.use(require("express-session")({
     secret:"sylvester gotta code everyday bitch",
       resave:false,
       saveUninitialized:false
   }))
 
-app.use(express.static(__dirname + "/public"));
-
-app.use(express.static(__dirname + "/js"));
-app.use(bodyParser.urlencoded({extended: true}));
-app.set("view engine","ejs");
-
-//we tell app.js to use passport packages
 app.use(passport.initialize());
 app.use(passport.session());
 
-//responsiple in reading the session and taking data from the session
+
+
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -43,8 +50,12 @@ passport.deserializeUser(User.deserializeUser());
                  {brand:"lavis",size:"S",product:"t-shirt",image:"https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80",price:"123",decription:"image4"}];
 
 */
-
-
+/*adding the flash*/
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    
+    next();
+ });
 
 //landing routes
 app.get("/",function(req,res){
@@ -64,7 +75,7 @@ app.get("/brands",function(req,res){
 });
 
 //create new product
-app.post("/brands", function(req, res){
+app.post("/brands",isLoggedIn, function(req, res){
     // get data from form and add to campgrounds array
     var name=req.body.name
     var brand = req.body.brand;
@@ -86,7 +97,7 @@ Product.create(newproduct,function(err,createdproduct){
     
 });
 //show a form to create new product
-app.get("/brands/new",function(req,res){
+app.get("/brands/new",isLoggedIn,function(req,res){
    res.render("newP") ;
 }
 );
@@ -115,14 +126,15 @@ app.get("/register", function(req, res){
  });
  //handling user sign up
  app.post("/register", function(req, res){
-     console.log(req.body.username)
-     User.register(new User({username: req.body.username}), req.body.password, function(err, user){
+     
+     var newUser = new User({firstname: req.body.firstname,username: req.body.username,lastname: req.body.lastname,phonenumber: req.body.phonenumber,email: req.body.email});
+     User.register(newUser, req.body.password, function(err, user){
          if(err){
              console.log(err);
              return res.render('register');
          }
          passport.authenticate("local")(req, res, function(){
-            res.redirect("/login");
+            res.redirect("/brands ");
          });
      });
  });
@@ -135,7 +147,7 @@ app.get("/login", function(req, res){
  //login logic
  //middleware
  app.post("/login", passport.authenticate("local", {
-     successRedirect: "/secret",
+     successRedirect: "/brands/new",
      failureRedirect: "/login"
  }) ,function(req, res){
  });

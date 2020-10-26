@@ -12,26 +12,26 @@
 </head>
 <body>
  <header class="showcase">
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top nav-tabs">
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top nav-tabs nav-border">
     <div class="container">
-    <a class="navbar-brand text-light" href="#">clothing</a>
+    <a class="navbar-brand brand-nav" href="\">clothing</a>
     <button class="navbar-toggler text-light bg-border" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon "></span>
+      Manu <span class="navbar-toggler-icon my-2"></span>
     </button>
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link active nav-color  text-dark" href="#">sell with us </a>
+          <a class="nav-link text-light nav-color text-link" href="/brands/new">sell with us </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light " href="#">help</a>
+          <a class="nav-link text-light text-link " href="#">help</a>
         </li>
 
         
        
         <li class="nav-item">
-          <a class="nav-link nav-color text-light" href="#" >latest trends</a>
+          <a class="nav-link nav-color text-light text-link" href="#" >latest trends</a>
         </li>
         
       </ul>
@@ -55,12 +55,25 @@
         </li>
       </ul>
       <div class="dropdown-divider"></div>
+      <% if(!currentUser){%>
       <form class="form-inline">
-        
         <a class="btn btn-outline-secondary" href="/login">sign/signup</a>
       </form>
     </div>
-   
+    <% }else{%>
+      <ul class="nav navbar-nav navbar-right">
+        <div class="dropdown-divider"></div>
+        <li class="nav-item">
+          <a class="nav-link mx-2 sm-text-dark text-light " href="#">signed as <%= currentUser.username%>
+          </a>
+      </li>
+      <div class="dropdown-divider"></div>
+        <li class="nav-item">
+          <a class="nav-link mx-2 text-light" href="/logout">logout
+          </a>
+        </li>
+      </ul>
+      <%}%>
   </div>
   </nav>
  
@@ -69,10 +82,9 @@
 </div>
 <div class="container">
 
-  
   <div id="landing-header">
-    <h1 class="text-shadow">SHOP YOUR FAVOURATE LOCAL BRAND WITH US!</h1>
-    <a href="/brands" class="btn btn-lg btn-success p-2 p-0-sm">SHOP HERE <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+    <h1 class="text-shadow text-content typerwriter">SHOP YOUR FAVOURATE LOCAL BRAND WITH US!</h1>
+    <a href="/brands" class="btn btn-lg btn-light p-2 p-0-sm border-btn">SHOP HERE <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
   </div>
 </div>
 </div>
@@ -80,7 +92,7 @@
 <div class="container">
   <h2 class="content">drip with us with our recommended brand </h2>
 </div>
-<section class="container-fluid">
+<section class="container">
   <div class="row align-items-center content">
     <div class="col-lg-6 text-center order-2 order-md-1 cat-text">
        <h2>Get your winter clothes with us</h2>
@@ -100,6 +112,7 @@
      
     </div> 
  </div>
+ 
   <div class="row align-items-center content">
      <div class="col-lg-6 text-center order-2 order-md-1 >
         <h2>winter clothes with us</h2>
@@ -120,6 +133,7 @@
      </div> 
   </div>
 </section>
+</div>
 <footer class="footer">
   <p>questions? call 0714048438</p>
 

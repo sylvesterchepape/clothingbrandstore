@@ -1,3 +1,8 @@
+ body{
+   background-color: #F1F1F1;
+ }
+ 
+ 
  .card-body{
      background-color: white
  }
@@ -23,10 +28,88 @@
  }
 
  .below-nav{
-     margin-top: 4em;
+     margin-top: 5em;
  }
- 
- 
+
+ .brand-nav{
+    color:bisque;
+    font-weight: 600;
+    font-size: 2.2rem;
+    text-shadow: rgb(197, 191, 183);
+     text-transform: uppercase;
+  }
+  .text-link{
+    font-weight: 200;
+    font-size: 1rem;
+    color:#f5d1b0;
+    text-transform: uppercase;
+  }
+  .text-link{
+    font-weight: 300;
+    font-size: 1rem;
+    color:#f5d1b0;
+    text-transform: uppercase;
+  }
+  .text-dec{
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.80rem;
+    text-transform: capitalize;
+    text-align-last: left;
+  }
+  .bg-nav{
+      background-color: darkgray;
+  }
+
+  /*texts*/
+  #head-text{
+      text-align: center;
+      text-transform: uppercase;
+      color: #E8F0FE;
+      margin-bottom: 4rem;
+
+  }
+  .image-crop{
+      height: 10.2rem;
+      width: 100%;
+
+  }
+
+  .align-form{
+    width: 50%;
+    margin: 25px auto;
+
+  }
+  
+  col-6 .form-group .toggle-password {
+    position: relative;
+    width:40px;
+    height:40px;
+    top:2px;
+    right:2px;
+    border-radius:50%;
+    text-align:center;
+    line-height:35px;
+    font-size:20px;
+    cursor:pointer;
+  }
+
+ .fa-arrow-left{
+     font-size: 2rem;
+     font-weight: 400;
+     color: black;
+ }
+ /* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
  
  /* Older browser support - .no-cssanimations class added by modernizr */
  .no-cssanimations .slideshow li {
